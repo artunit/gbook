@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    monitor.xml - track pipeline
+
+    art rhyno (http://projectconifer.ca), Mar. 2011
+    (c) Copyright GNU General Public License (GPL)
+
+    Revised:
+-->
+<document xmlns:jx="http://apache.org/cocoon/templates/jx/1.0">
+    <body>
+
+    <!-- job list -->
+    <row>
+    <column>
+    <section>
+            <title>Pipeline progress</title>
+            <div class="grid_16 status_header">
+                <span class="grid_5">Name</span>
+                <span class="grid_5 column-shading-left">Started</span>
+                <span class="grid_5 column-shading-left">Status</span>
+            </div>
+                
+            <div class="grid_16">
+                <span class="grid_5">${pipename}</span>
+                <span class="grid_5 column-shading-left">${session.start}</span>
+                <span class="grid_5 column-shading-left">${session.status}</span>
+            </div>
+            
+            <!--
+            <jx:forEach var="entry" items="${entries}">
+                <div class="grid_14">
+                    <span class="grid_2">${entry.name}</span>
+                    <span class="grid_2 column-shading-left">${entry.jobName}</span>
+                    <span class="grid_2 column-shading-left">${formatter.format(entry.nextTime)}</span>
+                  
+                    <jx:choose>
+                        <jx:when test="${entry.isRunning() == true}">
+                            <span class="grid_2 column-shading-left" style="color: red">${entry.isRunning()}</span>
+                        </jx:when>
+                        <jx:otherwise>
+                            <span class="grid_2 column-shading-left" style="color: green">${entry.isRunning()}</span>
+                        </jx:otherwise>
+                    </jx:choose>
+                
+                    <span class="grid_2 column-shading-left">${entry.schedule}</span>
+                    <span class="grid_2 column-shading-left">
+                        <a href="continue.${cocoon.continuation.id}?action=remove&amp;name=${entry.name}">remove</a>
+                    </span>
+                </div>
+            </jx:forEach>
+            -->
+        
+    </section>
+    </column>
+    </row>
+
+    <row>
+    <column>
+    <section>
+        <title>Launcher</title>
+        <p id="jamun_intro">
+            For building a google bookshelf, initiating multiple jobs does not result in improved
+            output, at least at this point. 
+        </p>
+          
+        <form method="post" action="continue.${cocoon.continuation.id}?action=launcher">
+            <table>
+            <tr>
+                <td align="right">Name of pipeline:</td>
+                <td><input name="pipename" size="10" value="${displayname}"/></td>
+            </tr>
+            <tr>
+                <td align="right">Pipeline to be initiated:</td>
+                <td><input name="pipeline" size="40" value="${pipeline}"/>
+                    <br clear="left"/>
+                    (GBshelver-<em>search type</em>-<em>set number</em>-<em>start number in file</em>)
+                </td>
+            </tr>                            
+            <tr>
+                <td align="right"><p>Choose an option:</p></td>
+                <td>
+                    <table class="status_table">
+                    <tr>
+                        <td align="right"><em>Start pipeline processing »</em></td>
+                        <td> &#160; </td>
+                        <td>
+                            <input type="submit" name="immediately" value="Start now" 
+                                onclick="alert('pipeline submitted, press refresh to see progress...');"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right"><em>Stop pipeline processing »</em></td>
+                        <td> &#160; </td>
+                        <td><input type="submit" name="zapit" value="Stop"/></td>
+                    </tr>
+                    </table>
+                </td>
+            </tr>
+            </table>
+        </form>
+        <p><a href="continue.${cocoon.continuation.id}">Refresh</a></p>
+    </section>
+    </column>
+    </row>
+
+    <row>
+    <column>
+    <section>
+          
+    <title>Tail of Logfile</title>
+    <div class="grid_15 column-shading-left column-shading-right">
+    <jx:forEach var="line" items="${log}">
+        <code>${line}</code><br/>
+    </jx:forEach>
+    </div>
+
+    </section>
+    </column>
+    </row>
+
+  </body>
+</document>

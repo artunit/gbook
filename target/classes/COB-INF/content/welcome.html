@@ -1,0 +1,154 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>jamun - status</title>
+<link href="reset.css" rel="stylesheet">
+<link href="text.css" rel="stylesheet">
+<link href="960.css" rel="stylesheet">
+<link href="greensky.css" rel="stylesheet">
+<link href="jamun.css" rel="stylesheet">
+</head>
+<body>
+<div class="container_16">
+<div class="grid_16">
+<div id="custom_header">
+    <img align="left" class="logo" src="jamun.jpg">
+        jamun - "Inside the Book" via Google Books 
+    </img>
+</div>
+<div class="clear"></div>
+<div class="grid_15">
+<div id="jamun_heading">1) Testing the Environment</div>
+<p/>
+<p class="jamun_text">
+The README file describes the software environment required to run the
+application. This page links to a few tests and describes how to build your
+library shelf in Google Books. 
+<p/>
+<p class="jamun_text">
+This application relies heavily on a customized 
+<a
+href="http://cocoon.apache.org/">cocoon</a> 
+<a
+href="http://cocoon.apache.org/2.0/userdocs/transformers/transformers.html">
+transformer</a> called <em>seth</em> (Search Everything Till it Helps)
+for working with the <a
+href="http://code.google.com/apis/books/docs/gdata/developers_guide_protocol.html">
+Google Book Data API</a>. The link below should open up an xml result, don't worry
+about the rendering, the big problem would be if there's an error message:
+
+<ul>
+<li class="jamun_text"><a href="./sethtest" target="_blank">seth test</a></li>
+</ul>
+<p class="jamun_text">
+If that looks ok, you are probably in good shape for the API interactions. Every
+addition to a Google Book Shelf is preceded by a test to see if the shelf is 
+available. This is always done with one specific book, as indicated in the
+README file. The link below uses the same test, note that the title does not have to be
+on the shelf:
+</p>
+<ul>
+<li class="jamun_text"><a href="./publicshelftest" target="_blank">shelf test</a></li>
+</ul>
+<p class="jamun_text">
+Ok, you should be good to go for building the shelf. Using e-mail is optional
+and there may be lots of reasons why a mail server is blocked, but it's a really
+handy way to deal with the biggest headache associated with putting a lot
+of books a book shelf, and that is the <em>public/private</em> problem. For some
+reason, a Google Book shelf switches from being public to private when
+adding a lot of entries, and the process is halted until the shelf is reset. If
+an e-mail is sent, you can use the link in the message to set the shelf back to
+<em>public</em>, and the process will continue to add books.
+</p>
+<p class="jamun_text">
+Note that the process "waits" for a shelf to be reset, and finally terminates
+after 24 hours. If you can monitor the process, the mail option might not matter
+to you. If you have a portable device that lets you read mail and access
+your shelf, you are in really good shape for avoiding delays.
+</p>
+<ul>
+<li class="jamun_text"><a href="./mailtest" target="_blank">mail test (optional)</a></li>
+</ul>
+<div id="jamun_heading">2) Formatting the Data</div>
+<p/>
+<p class="jamun_text">
+Right now, this will only work with ISBNs, but LCCNs could
+probably be processed in much the same way. The format
+is in XML: 
+</p>
+<div class="example_text">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br clear="left"/>
+&lt;idents&gt;<br clear="left"/>
+<span class="example_indent">
+  &lt;ident&gt;1043963339&lt;/ident&gt;<br clear="left"/>
+  &lt;ident&gt;1093454777&lt;/ident&gt;<br clear="left"/>
+  &lt;ident&gt;1100101071&lt;/ident&gt;<br clear="left"/>
+</span>
+&lt;/idents&gt;
+</div>
+<p/>
+<p class="jamun_text">
+The <em>ISBN</em> designation needs to be reflected in the file name, e.g. 
+<em>isbn0.xml</em>. The approach is to use names like this with the number
+in the file name indicating which file to use For example, you might have
+<em>isbn0.xml</em>, <em>isbn1.xml</em>, etc. I have only worked with
+batches of 1000 entries at a time, but your milage may vary.
+</p>
+<p class="jamun_text">
+The <em>file-path</em> setting in the <em>config.properties</em> 
+designates the location of the files.
+</p>
+<div id="jamun_heading">3) Building the Shelf</div>
+<p/>
+<p class="jamun_text">
+There is an interface for initiating and monitoring building the shelf:
+</p>
+<ul>
+<li class="jamun_text"><a href="./status" target="_blank">monitor pipeline</a></li>
+</ul>
+<p class="jamun_text">
+The monitoring interface has a button for <em>starting</em> and <em>stopping</em>
+the process. The <em>refresh</em> link will display status information and
+<em>tail</em> the log file. The console is also a good source of information.
+</p>
+<img src="monitor.jpg"/><br clear="left"/>
+<p class="jamun_text">
+Depending on how often the <em>public/private</em> setting needs to be changed
+and how closely the process is monitored, about 1000 ISBNs can be processed
+in an hour.
+</p>
+<div id="jamun_heading">4) Future Directions</div>
+<p/>
+<p class="jamun_text">
+It would be useful to use an identifier for the bibliographic record
+to create a reference back from the book on the shelf. This could
+be put into a note through the Google API. The input format might
+look like this:
+</p>
+<div class="example_text">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br clear="left"/>
+&lt;idents&gt;<br clear="left"/>
+<span class="example_indent">
+  &lt;ident <strong>id="123212"</strong> &gt;1043963339&lt;/ident&gt;<br clear="left"/>
+</span>
+&lt;/idents&gt;
+</div>
+<p/>
+<p class="jamun_text">
+Google Books can be searched by LCCN and this would add to the set
+of records that can be matched against the library collection.
+</p>
+<p/>
+<div id="jamun_heading">5) More Information</div>
+<p/>
+<p class="jamun_text">
+See <a href="http://blog.ouseful.info/2010/12/08/google-books-library-shelves/">
+OUseful.Info's post on Google Books Library Shelves</a>. You can also
+<a href="mailto:artrhyno@uwindsor.ca">contact me</a> if you have
+any questions or comments.
+</p>
+</div><!-- grid_15 -->
+</div><!-- grid_16 -->
+</div><!-- container_16 -->
+</body>
+</html>

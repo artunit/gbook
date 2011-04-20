@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    seth.xml - test transformer
+
+    art rhyno (http://projectconifer.ca), Apr. 2011
+    (c) Copyright GNU General Public License (GPL)
+
+    Revised:
+-->
+<sethtarget xmlns:seth="http://seth.sourceforge.net">
+    <seth:execute-retrieval>
+        <!-- use specific User Agent -->
+        <seth:useragent>Mozilla/4.5</seth:useragent>
+
+	    <!-- timeout (in seconds) -->
+        <seth:timeout>60</seth:timeout>
+
+        <!-- where to go -->
+        <seth:url>http://books.google.com/books/feeds/volumes</seth:url>
+
+        <!-- set name value pairs, you can also put into url -->
+        <seth:nvp name="q">river+palace</seth:nvp>
+        <seth:nvp name="start-index">1</seth:nvp>
+        <seth:nvp name="max-results">5</seth:nvp>
+
+        <!-- GET or POST -->
+        <seth:method>GET</seth:method>
+
+	    <!-- redirect flag (true by default -->
+        <!--
+        <seth:redirect>FALSE</seth:redirect>
+        -->
+
+        <!-- use regular expression in results (to limit text) -->
+        <!--
+        <seth:regexp>[Pp]age*</seth:regexp>
+        -->
+	        
+        <!-- limit to certain tags -->
+        <!--
+        <seth:limit>a,p</seth:limit>
+        -->
+
+	    <!-- cookie support, name, path, domain, age, date, 
+		    and secure flag are all expressed as attributes
+	    -->
+	    <!--
+	    <seth:cookie name="dog">chewy</seth:cookie>
+	    -->
+
+	    <!-- put extra information in log if true -->
+	    <seth:debug>TRUE</seth:debug>
+    </seth:execute-retrieval>
+</sethtarget>

@@ -1,0 +1,43 @@
+# config values - Last Revised: Apr. 18, 2011
+# TODO: want to add a bib id attribute and url spec here
+#       the idea would be to add a note or label to GB shelf
+#       book so that it could link back to catalogue
+#
+
+# google books account details - these must be supplied
+# the test-isbn does not have to be an existing title on your shelf
+# the library-shelf is the number of the shelf, usually something
+# like 1001, 1002, etc.
+#
+user-id=
+library-shelf=
+gaccount=
+gpass=
+test-isbn=9781583240700
+
+# where to look for files, will be a treated
+# as a relative path unless it begins with "/"
+file-path=content
+log-file=../../../../target/work/log/log4j.log
+
+# for mail - you need to add this information if you
+# want to be e-mailed when the shelving gets paused
+#
+smtp-host=
+smtp-port=
+smtp-to=
+smtp-from=
+
+# operational values 
+# step-num: how many identifiers to process at a time
+# log-snippet: how many lines of log file to show on status screen
+#
+step-num=50
+log-snippet=50
+
+# google books values - host addresses
+# that can probably be left as is
+#
+google-host=https://www.google.com/accounts/ClientLogin
+harvest-redirect=http://www.google.ca/books
+

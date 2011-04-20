@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<google id="google" xmlns:jx="http://apache.org/cocoon/templates/jx/1.0">
+	<authsub>
+		${authsub}
+	</authsub>
+	<volid>
+		${volid}
+	</volid>
+	<shelfid>
+		${shelfid}
+	</shelfid>
+	<userid>
+		${userid}
+	</userid>
+</google>

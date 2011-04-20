@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<google id="google" xmlns:jx="http://apache.org/cocoon/templates/jx/1.0">
+	<accountType>
+		${accountType}
+	</accountType>
+	<Email>
+		${Email}
+	</Email>
+	<Passwd>
+		${Passwd}
+	</Passwd>
+	<service>
+		${service}
+	</service>
+	<source>
+		${source}
+	</source>
+<!--
+	<parms>
+	<jx:forEach select="#{parms}" var="parm">
+		<parm>
+			${parm}
+		</parm>
+ 	</jx:forEach> 
+	</parms>
+-->
+</google>
