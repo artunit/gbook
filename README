@@ -3,6 +3,28 @@ Last Revised: April 2011
 
 Project: gbook
 
-This is a cocoon block, and this a stub.
+Prerequisites
+
+* tomcat 
+tomcat/work/Catalina/config
+
+or via maven
+
+* maven (http://maven.apache.org/download.html)
+* gbook-1.0-SNAPSHOT.jar (https://github.com/artunit/artunit-mvn-repo/blob/master/snapshots/org/conifer/gbook/1.0-SNAPSHOT/gbook-1.0-SNAPSHOT.jar)
+* commons-httpclient-3.0.jar (http://archive.apache.org/dist/httpcomponents/commons-httpclient/3.0/binary/)
+* jtidy-r938.jar (http://sourceforge.net/projects/jtidy/files/JTidy/r938/)
+
+or a servlet container:
+
+The jar files need to be installed directly into your local maven repository:
+
+mvn install:install-file -DgroupId=org.conifer -DartifactId=gbook -Dversion=1.0-SNAPSHOT -Dpackaging=jar -Dfile=gbook-1.0-SNAPSHOT.jar
+
+mvn install:install-file -DgroupId=commons-httpclient -DartifactId=commons-httpclient -Dversion=3.0.1 -Dpackaging=jar -Dfile=commons-httpclient-3.0.jar
+
+mvn install:install-file -DgroupId=jtidy -DartifactId=jtidy -Dversion=r938 -Dpackaging=jar -Dfile=jtidy-r938.jar
+
+more to come...
 
 art rhyno <projectconifer.ca>
