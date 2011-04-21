@@ -1,41 +1,126 @@
 README – Created: March 2011
 Last Revised: April 2011
 
-Project: gbook
+There must be a config.properties file, the outline is here:
 
-Most important step: There must be a config.properties file, the outline 
-is here:
+    https://github.com/artunit/gbook/blob/master/config/config.properties.sample
 
-https://github.com/artunit/gbook/blob/master/config/config.properties.sample
-
-copy this to config.properties and place it in the "config" directory 
+Fill in the values, copy this to config.properties and place it in the "config" directory 
 identified below.
 
-Prerequisites
-
-* tomcat 
+* tomcat installation
 
 If you are using tomcat, the location of the config file should be
 
-{tomcat-base}/work/Catalina/config
+    {tomcat-base}/work/Catalina/config
 
-or via maven
+copy the dist/gshelf.war file to webapps, and then access the application at:
 
-* maven (http://maven.apache.org/download.html)
+    http://localhost:8080/gshelf/gdata/
+
+or whatever host/port tomcat uses. This is the simplest option.
+
+* maven and jetty installation
+
+This combination is more involved and requires a few jar files that need to be installed manually:
+
 * gbook-1.0-SNAPSHOT.jar (https://github.com/artunit/artunit-mvn-repo/blob/master/snapshots/org/conifer/gbook/1.0-SNAPSHOT/gbook-1.0-SNAPSHOT.jar)
 * commons-httpclient-3.0.jar (http://archive.apache.org/dist/httpcomponents/commons-httpclient/3.0/binary/)
 * jtidy-r938.jar (http://sourceforge.net/projects/jtidy/files/JTidy/r938/jtidy-r938.zip/download)
 
-or a servlet container:
+Download these and install them directly into your local maven repository:
 
-The jar files need to be installed directly into your local maven repository:
+    mvn install:install-file -DgroupId=org.conifer -DartifactId=gbook -Dversion=1.0-SNAPSHOT -Dpackaging=jar -Dfile=gbook-1.0-SNAPSHOT.jar
 
-mvn install:install-file -DgroupId=org.conifer -DartifactId=gbook -Dversion=1.0-SNAPSHOT -Dpackaging=jar -Dfile=gbook-1.0-SNAPSHOT.jar
+    mvn install:install-file -DgroupId=commons-httpclient -DartifactId=commons-httpclient -Dversion=3.0.1 -Dpackaging=jar -Dfile=commons-httpclient-3.0.jar
 
-mvn install:install-file -DgroupId=commons-httpclient -DartifactId=commons-httpclient -Dversion=3.0.1 -Dpackaging=jar -Dfile=commons-httpclient-3.0.jar
+    mvn install:install-file -DgroupId=jtidy -DartifactId=jtidy -Dversion=r938 -Dpackaging=jar -Dfile=jtidy-r938.jar
 
-mvn install:install-file -DgroupId=jtidy -DartifactId=jtidy -Dversion=r938 -Dpackaging=jar -Dfile=jtidy-r938.jar
+The application is set up as a cocoon block, and maven can supply the application environment:
 
-more to come...
+    mvn archetype:generate -DarchetypeCatalog=http://cocoon.apache.org
 
-art rhyno <projectconifer.ca>
+    Select option 3 and supply some package options:
+
+    Choose archetype:
+    1: http://cocoon.apache.org -> cocoon-22-archetype-block-plain (Creates an empty Cocoon block; useful if you want to add another block to a Cocoon application)
+    2: http://cocoon.apache.org -> cocoon-22-archetype-block (Creates a Cocoon block containing some small samples)
+    3: http://cocoon.apache.org -> cocoon-22-archetype-webapp (Creates a web application configured to host Cocoon blocks. Just add the block dependencies)
+    Choose a number:  (1/2/3): 3
+    Define value for groupId: : org.conifer
+    Define value for artifactId: : gshelf
+    Define value for version:  1.0-SNAPSHOT: : 1.0.0
+    Define value for package:  org.conifer: : 
+
+The application's pom.xml file needs to be given the following dependencies:
+
+    <dependency>
+        <groupId>org.conifer</groupId>
+        <artifactId>gbook</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.cocoon</groupId>
+        <artifactId>cocoon-core</artifactId>
+        <version>2.2.0</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.cocoon</groupId>
+        <artifactId>cocoon-servlet-service-components</artifactId>
+        <version>1.0.0</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.cocoon</groupId>
+        <artifactId>cocoon-template-impl</artifactId>
+        <version>1.1.0</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.cocoon</groupId>
+        <artifactId>cocoon-flowscript-impl</artifactId>
+        <version>1.0.0</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.cocoon</groupId>
+        <artifactId>cocoon-mail-impl</artifactId>
+        <version>1.1.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>servlet-api</artifactId>
+        <version>2.4</version>
+        <scope>provided</scope>
+    </dependency>
+    <dependency>
+        <groupId>commons-httpclient</groupId>
+        <artifactId>commons-httpclient</artifactId>
+        <version>3.0.1</version>
+    </dependency>
+      <dependency>
+        <groupId>javax.mail</groupId>
+        <artifactId>mail</artifactId>
+        <version>1.4</version>
+      </dependency>
+      <dependency>
+        <groupId>jtidy</groupId>
+        <artifactId>jtidy</artifactId>
+        <version>r938</version>
+      </dependency>
+    <dependency>
+        <groupId>org.ko.ourontario</groupId>
+        <artifactId>cocoon-transformers-ko</artifactId>
+        <version>1.1.0-SNAPSHOT</version>
+    </dependency>
+
+Create a directory called config in "gshelf" and copy config.properties there. Jetty
+will launch the environment:
+
+    mvn package jetty:run
+
+The application is available on  the default jetty port:
+
+    http://localhost:8888/gbook/
+
+The resulting web page provides some details on how to start the application. Please
+address any questions to:
+
+art rhyno <http://projectconifer.ca>
